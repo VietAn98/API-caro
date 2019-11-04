@@ -8,22 +8,29 @@ const ExtractJWT = passportJWT.ExtractJwt;
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "username",
+      usernameField: "email",
       passwordField: "password"
     },
-    function(username, password, cb) {
+    function(email, password, cb) {
       //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
       return appModel
-        .findOne(username)
+        .findOne(email)
         .then(rows => {
           if (!rows) {
             return cb(null, false, {
-              message: "Incorrect username or password."
+              message: "Incorrect email or password."
             });
           }
           if (password === rows[0].password) {
             var id = rows[0].id;
-            var user = { id, username, password };
+            // var email = rows[0].email;
+            var username = rows[0].username;
+            var date = rows[0].date;
+            var gender = rows[0].gender;
+            var avatar = rows[0].avatar;
+
+            var user = { id, email, username, password, date, gender, avatar };
+
             return cb(null, user, { message: "Logged In Successfully" });
           }
           return cb(null, false, { message: "Invalid pass!!" });

@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var auth = require('./routes/auth');
 
-var passport = require('passport');
 
 require('./middlewares/passport');
 
@@ -30,7 +29,7 @@ app.use(function(req, res, next) {
   next(); 
 });
 app.use('/', indexRouter);
-app.use('/me', passport.authenticate('jwt', {session: false}), usersRouter);
+// app.use('/me', passport.authenticate('jwt', {session: false}), usersRouter);
 app.use('/user', auth);
 
 // catch 404 and forward to error handler

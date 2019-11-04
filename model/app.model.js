@@ -7,10 +7,13 @@ module.exports = {
   add: entity => {
     return db.add(`Account`, entity);
   },
-  findOne: (username) => {
-    return db.load(`select * from Account where username = '${username}'`);
+  findOne: (email) => {
+    return db.load(`select * from Account where email = '${email}'`);
   },
   findOneById: (id) => {
     return db.load(`select * from Account where id = '${id}'`);
+  },
+  update: entity => {
+    return db.update(`Account`, 'id', entity);
   }
 };
